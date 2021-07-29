@@ -1,80 +1,59 @@
 export default class Haiku {
-  constructor(line1,line2,line3){
-    this.line1 = line1;
-    this.line2 = line2;
-    this.line3 = line3;
+  constructor(line){
+    this.line = line;
   }
-  
-  haikuLine1(){
-    let line1 = "an old silent pond"; 
-    //let haikuSyllable = false
-    let vowel = ['a','e','i','o','u'];
-    let textArrayLine1 =[];
-    let result = [];
-    let vowelArrayLineCount = 0;
-    textArrayLine1 = line1.split(" ");
-    textArrayLine1.forEach(function (i){
-      for(let j=0; j<= vowel.length; j++){
-        if(i.includes(vowel[j])){
-          vowelArrayLineCount++
-          result.push(i);
-          
-        }
-      }
-      return result;
-    })
+
+  haikuCheck(){
+    const totalVowelCount = this.vowelCount();
     
-    return vowelArrayLineCount;
-   
-	}
-  haikuLine3(){
-    let line3 = "splash! silence again";
-    let vowel = ['a','e','i','o','u'];
-    let textArrayLine3 =[];
-    let vowelArrayLine3Count = 0;
-    textArrayLine3 = line3.split(" ");
-    textArrayLine3.forEach(function (i){
-      for(let j=0; j<= vowel.length; j++){
-        if(i.includes(vowel[j])){
-          vowelArrayLine3Count++
+    const totalSilentECount = this.silentEcheck();
+    const twoVowelCount = this.twoVowelCheck();
+    let TotalSyllabeCount = totalVowelCount - totalSilentECount - twoVowelCount;
+    console.log("total syllable",TotalSyllabeCount)
+    //console.log(twoVowelCount);
+    return TotalSyllabeCount;
+  }  
+    
+  vowelCount(){
+    let vowel = ['a','e','i','o','u','y'];
+    let textArrayLine1 =[];
+      let countVowelsHiaku = 0;
+      
+    textArrayLine1 = this.line.toLowerCase().split("");
+  
+    textArrayLine1.forEach(function (i){
+      vowel.forEach(function(j){
+      
+        if(i.includes(j)){
+          countVowelsHiaku++;   
         }
-      }
-    })
-    return vowelArrayLine3Count;
+      });  
+        
+    });
+   //console.log("countVowelsHiaku",countVowelsHiaku);
+   return countVowelsHiaku; 
+    
   }
 
-  haikuLine2(){
-    let line2 = "a frog jumps into the pond";
-    let vowel = ['a','e','i','o','u'];
-    let textArrayLine2 =[];
-    let vowelArrayLine2Count = 0;
-    textArrayLine2 = line2.split(" ");
-    textArrayLine2.forEach(function (i){
-      for(let j=0; j<= vowel.length; j++){
-        if(i.includes(vowel[j])){
-          vowelArrayLine2Count++
+  silentEcheck(){
+    let syllCount = 0;
+    let syllArray= this.line.split(" ");
+      syllArray.forEach(function(i){
+            if(i[i.length-1] === 'e'){
+                syllCount++;
+          }
+      });
+    return syllCount;
+    }
+
+  twoVowelCheck(){
+    
+    let diphthongCount =0;
+    let textArrayLine=[];
+    textArrayLine = this.line.split(" ");
+    let newString = textArrayLine.toString();
+    diphthongCount = newString.match(/[aeiouy]{2}/ig).length;
+    //console.log(diphthongCount);
+    return diphthongCount;
         }
       }
-    })
-    return vowelArrayLine2Count;
-  }
-
-haikuCheck(){
-   let line1 = "come go for hike";
-    //this.haikuLine1();
-      let line1Array = line1.split(" ");
-    let haikuSyllable = false
-    line1Array.forEach(function(i){
-      if(i.endsWith('e')){
-        haikuSyllable = true;
-      }else{
-        haikuSyllable = false;
-      }
-    })
-   return haikuSyllable; 
-}
-}
-
-//  /\n/g
-
-//"An old silent pond", "A frog jumps into the pond", "splash! Silence again");
